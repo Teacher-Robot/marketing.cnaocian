@@ -19,6 +19,7 @@ body {
   overflow: hidden;
 }
 button { font: inherit; }
+html:fullscreen, html:-webkit-full-screen { overflow: hidden; background: var(--bg); }
 
 .bgline {
   position: fixed; inset: 0 auto 0 0; width: 6px; background: var(--red); z-index: 50;
@@ -125,6 +126,8 @@ button { font: inherit; }
 .control:hover { border-color: var(--red); transform: translateY(-1px); }
 .control-small { font-size: 1.1rem; }
 .fullscreen-text { display: none; }
+.fullscreen-message { position: fixed; left: 50%; bottom: calc(82px + env(safe-area-inset-bottom)); z-index: 70; width: min(90vw, 440px); padding: 12px 16px; transform: translateX(-50%); border: 1px solid rgba(255,255,255,.16); border-radius: 10px; background: rgba(13,17,25,.96); color: var(--white); font-size: .9rem; line-height: 1.4; text-align: center; box-shadow: var(--shadow); }
+.fullscreen-message[hidden] { display: none; }
 .progress-wrap { height: 4px; flex: 1; border-radius: 999px; background: #242a35; overflow: hidden; }
 .progress { width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg,var(--red),#ff5964); transition: width .35s ease; }
 .counter { min-width: 64px; text-align: center; color: #9da4b2; font-size: .78rem; font-weight: 800; }

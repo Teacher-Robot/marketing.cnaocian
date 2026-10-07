@@ -84,6 +84,7 @@ document.addEventListener('touchend', event => {
 }, { passive: true });
 
 const fullscreenButton = document.getElementById('fullscreen');
+const fullscreenMessage = document.getElementById('fullscreen-message');
 
 function updateFullscreenLabel() {
   const isFullscreen = Boolean(document.fullscreenElement || document.webkitFullscreenElement);
@@ -96,14 +97,20 @@ document.addEventListener('webkitfullscreenchange', updateFullscreenLabel);
 
 fullscreenButton.addEventListener('click', async () => {
   try {
+    fullscreenMessage.hidden = true;
     if (document.fullscreenElement || document.webkitFullscreenElement) {
       const exitFullscreen = document.exitFullscreen || document.webkitExitFullscreen;
       if (exitFullscreen) await exitFullscreen.call(document);
     } else {
-      const requestFullscreen = document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen;
-      if (requestFullscreen) await requestFullscreen.call(document.documentElement);
+      const root = document.documentElement;
+      if (root.requestFullscreen) await root.requestFullscreen({ navigationUI: 'hide' });
+      else if (root.webkitRequestFullscreen) root.webkitRequestFullscreen();
+      else throw new Error('Fullscreen is not supported');
     }
-  } catch (_) {}
+  } catch (_) {
+    fullscreenMessage.textContent = 'Este navegador não permite ocultar as barras nesta página. No iPhone, adicione o site à Tela de Início e abra pelo ícone.';
+    fullscreenMessage.hidden = false;
+  }
 });
 
 renderSlides();
