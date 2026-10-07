@@ -124,6 +124,7 @@ button { font: inherit; }
 }
 .control:hover { border-color: var(--red); transform: translateY(-1px); }
 .control-small { font-size: 1.1rem; }
+.fullscreen-text { display: none; }
 .progress-wrap { height: 4px; flex: 1; border-radius: 999px; background: #242a35; overflow: hidden; }
 .progress { width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg,var(--red),#ff5964); transition: width .35s ease; }
 .counter { min-width: 64px; text-align: center; color: #9da4b2; font-size: .78rem; font-weight: 800; }
@@ -134,6 +135,11 @@ button { font: inherit; }
 
 @media (max-width: 900px) {
   body { overflow: hidden; }
+  .controls { left: 12px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); gap: 6px; }
+  .control { width: 38px; }
+  .counter { min-width: 50px; font-size: .7rem; }
+  #fullscreen { width: auto; min-width: 84px; padding: 0 8px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+  .fullscreen-text { display: inline; font-size: .68rem; white-space: nowrap; }
   .slide, .slide:nth-child(even), .final-slide { grid-template-columns: 1fr; padding: 46px 7vw 105px; gap: 0; overflow: hidden; }
   .visual, .slide:nth-child(even) .visual { position: absolute; inset: auto 4vw 11vh auto; width: min(46vw, 28.6667vh); max-width: none; height: auto; aspect-ratio: 2 / 3; order: 0; opacity: .34; }
   .visual img { width: 100%; height: 100%; border-radius: 22px; }

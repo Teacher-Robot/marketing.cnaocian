@@ -83,10 +83,26 @@ document.addEventListener('touchend', event => {
   touchStartX = null;
 }, { passive: true });
 
-document.getElementById('fullscreen').addEventListener('click', async () => {
+const fullscreenButton = document.getElementById('fullscreen');
+
+function updateFullscreenLabel() {
+  const isFullscreen = Boolean(document.fullscreenElement || document.webkitFullscreenElement);
+  fullscreenButton.setAttribute('aria-label', isFullscreen ? 'Sair da tela cheia' : 'Tela cheia');
+  fullscreenButton.querySelector('.fullscreen-text').textContent = isFullscreen ? 'Sair' : 'Tela cheia';
+}
+
+document.addEventListener('fullscreenchange', updateFullscreenLabel);
+document.addEventListener('webkitfullscreenchange', updateFullscreenLabel);
+
+fullscreenButton.addEventListener('click', async () => {
   try {
-    if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
-    else await document.exitFullscreen();
+    if (document.fullscreenElement || document.webkitFullscreenElement) {
+      const exitFullscreen = document.exitFullscreen || document.webkitExitFullscreen;
+      if (exitFullscreen) await exitFullscreen.call(document);
+    } else {
+      const requestFullscreen = document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen;
+      if (requestFullscreen) await requestFullscreen.call(document.documentElement);
+    }
   } catch (_) {}
 });
 
